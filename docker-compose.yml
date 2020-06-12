@@ -1,0 +1,49 @@
+version: '3'
+services:
+  middleware:
+    build: ./scholars-discovery
+    volumes:
+     - maven_data:/root/.m2
+     - ./application-dev.yml:/scholars/application.yml
+       #- ./scholars-discovery:/scholars
+       #- ./scholars-discovery/triplestore:/scholars/triplestore
+       #command: >
+       # bash -c  "mvn -f /app/pom.xml clean package -Dmaven.test.skip=true
+       # && mvn spring-boot:run"
+       #command: >
+       #bash -c  "mvn -f /app/pom.xml clean package -Dmaven.test.skip=true
+       # && mvn spring-boot:run -Dspring-boot.run.profiles=dev -Dspring-boot.run.config.location=/app/"       
+    ports:
+     - "9000:9000"
+    links:
+     - solr
+  solr:
+    build: ./scholars-discovery/solr
+    volumes:
+     - solr_data:/opt/solr/server/solr
+    ports:
+    - "8983:8983"
+  vivo-scholar:
+    #build: ./vivo-scholar-ui/Dockerfile.dev
+    build:
+      context: ./vivo-scholar-ui
+      dockerfile: Dockerfile.dev
+      #command: /bin/sh -c "buffalo dev"
+    command: >
+      bash -c "cd /vivo-scholar && buffalo dev"
+    entrypoint: /vivo-scholar/docker-entrypoint.sh
+    env_file:
+      - .env.vivo-scholar-ui.example
+    volumes:
+      - ./vivo-scholar-ui:/vivo-scholar
+      - go:/go
+    ports:
+      - "3000:3000"
+    depends_on:
+      - middleware
+    links:
+      - middleware
+volumes:
+  solr_data:
+  maven_data:
+  go:
