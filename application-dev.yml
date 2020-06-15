@@ -1,6 +1,8 @@
 middleware:
   index:
-    onStartup: true
+    onStartup: false
+  allowed-origins:
+  - http://middleware:9000
 
 spring:
   data:
