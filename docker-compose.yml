@@ -5,14 +5,15 @@ services:
     volumes:
      - maven_data:/root/.m2
      - ./application-dev.yml:/scholars/application.yml
+     #- ./data-imported:/scholars/triplestore
+     #- ./scholars-discovery:/scholars
        #- ./scholars-discovery:/scholars
        #- ./scholars-discovery/triplestore:/scholars/triplestore
        #command: >
-       # bash -c  "mvn -f /app/pom.xml clean package -Dmaven.test.skip=true
-       # && mvn spring-boot:run"
-       #command: >
        #bash -c  "mvn -f /app/pom.xml clean package -Dmaven.test.skip=true
-       # && mvn spring-boot:run -Dspring-boot.run.profiles=dev -Dspring-boot.run.config.location=/app/"       
+       #&& mvn spring-boot:run"
+    #command: >
+      #bash -c  "mvn -f /app/pom.xml clean package -Dmaven.test.skip=true && mvn spring-boot:run -Dspring-boot.run.profiles=dev -Dspring-boot.run.config.location=/scholars/"       
     ports:
      - "9000:9000"
     links:
@@ -33,10 +34,11 @@ services:
       bash -c "cd /vivo-scholar && buffalo dev"
     entrypoint: /vivo-scholar/docker-entrypoint.sh
     env_file:
-      - .env.vivo-scholar-ui.example
+      - ./.env.vivo-scholar-ui.example
     volumes:
       - ./vivo-scholar-ui:/vivo-scholar
       - go:/go
+      - ./.env.vivo-scholar-ui.example:/vivo-scholar/.env
     ports:
       - "3000:3000"
     depends_on:
