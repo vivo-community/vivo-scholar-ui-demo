@@ -10,9 +10,9 @@
 
 
 ```shell
-  > git clone https://github.com/vivo-community/scholars-discovery.git#1.0.0-RC1
+  > git clone https://github.com/vivo-community/scholars-discovery.git
 
-  > git clone https://github.com/vivo-community/vivo-scholar-ui.git#0.9.0
+  > git clone https://github.com/vivo-community/vivo-scholar-ui.git
 
 ```
 
