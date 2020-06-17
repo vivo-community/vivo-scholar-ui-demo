@@ -3,6 +3,10 @@ middleware:
     onStartup: true
   allowed-origins:
   - http://middleware:9000
+  # NOTE: to add your own data uncomment these lines (and put in own data directory)
+  #triplestore:
+  #  type: edu.tamu.scholars.middleware.service.TDBTriplestore
+  #  directory: ~/your/data/directory/tdbContentModels
 
 spring:
   data:
